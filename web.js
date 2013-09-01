@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var fs = require('fs');
+
 var index = fs.readFileSync('index.html', 'utf-8', function (err,data){
     if (err) {
 	return console.log(err);
@@ -8,10 +9,12 @@ var index = fs.readFileSync('index.html', 'utf-8', function (err,data){
     console.log(data);
 });
 
+var buffer = new Buffer(index, 'utf-8');
+
 app.use(express.logger());
 
 app.get('/', function(request, response) {
-  response.send(index);
+  response.send(buffer.toString());
 });
 
 var port = process.env.PORT || 5000;
